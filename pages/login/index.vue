@@ -19,13 +19,13 @@ definePageMeta({
             </label>
         </div>
         <button
-            class=" hover:bg-[#069736] w-[clamp(0px,40vmin,9999px)] h-[clamp(0px,6vmin,9999px)] border border-black cursor-pointer bg-[#09ca49] rounded-[clamp(0px,1vmin,40px)] text-white text-xs md:text-xl 2xl:text-2xl">
-            <span class="text-xs md:text-xl 2xl:text-2xl">登入</span>
+            class=" hover:font-bold hover:bg-[#069736] w-[clamp(0px,40vmin,9999px)] h-[clamp(0px,6vmin,9999px)] border border-black cursor-pointer bg-[#09ca49] rounded-[clamp(0px,1vmin,40px)] text-white text-xs md:text-xl 2xl:text-2xl">
+            <span class="text-xs md:text-xl 2xl:text-2xl ">登入</span>
         </button>
         <nav class="flex items-center justify-center gap-[clamp(0px,4vmin,9999px)]">
-            <NuxtLink to="#" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl">註冊</NuxtLink>
-            <NuxtLink to="#" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl">忘記密碼</NuxtLink>
+            <NuxtLink to="/login/signup" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">註冊</NuxtLink>
+            <NuxtLink to="/login/forgot-password" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">忘記密碼</NuxtLink>
         </nav>
-        <NuxtLink to="#" class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl">訪客登入</NuxtLink>
+        <NuxtLink to="#" class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">訪客登入</NuxtLink>
     </div>
 </template>
