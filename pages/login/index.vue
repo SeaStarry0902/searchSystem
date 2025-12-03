@@ -26,6 +26,6 @@ definePageMeta({
             <NuxtLink to="/login/signup" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">註冊</NuxtLink>
             <NuxtLink to="/login/forgot-password" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">忘記密碼</NuxtLink>
         </nav>
-        <NuxtLink to="#" class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">訪客登入</NuxtLink>
+        <NuxtLink to="/event" class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">訪客登入</NuxtLink>
     </div>
 </template>
