@@ -1,11 +1,11 @@
 <script setup>
-import sidebarLink from '~/components/sidebarLink.vue';
+import sidebarLink from '~/components/SidebarLink.vue';
 const sidebarOpen = ref(false)
 const isLogin = ref(false)
 console.log(sidebarOpen.value)
 </script>
 <template>
-    <div class="max-w-screen max-h-screen relative">
+    <div class="max-w-screen h-screen relative bg-[#d1fcdb]">
         <header>
             <!-- 遮罩 -->
             <div v-if="sidebarOpen" class="fixed inset-0 bg-black/50 z-40 cursor-pointer" @click="sidebarOpen = false">
