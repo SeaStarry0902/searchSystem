@@ -1,5 +1,5 @@
 <script setup>
-import sidebarLink from '~/components/SidebarLink.vue';
+import sidebarLink from '~/components/sidebarLink.vue';
 const sidebarOpen = ref(false)
 const isLogin = ref(false)
 console.log(sidebarOpen.value)
