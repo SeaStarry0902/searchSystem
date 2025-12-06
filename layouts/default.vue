@@ -1,11 +1,13 @@
 <script setup>
 import sidebarLink from '~/components/sidebarLink.vue';
+import TextInput from '~/components/TextInput.vue';
 const sidebarOpen = ref(false)
 const isLogin = ref(false)
+const isShowUserInfo = ref(false)
 console.log(sidebarOpen.value)
 </script>
 <template>
-    <div class="max-w-screen h-screen relative bg-[#d1fcdb]">
+    <div class="flex flex-col max-w-screen h-screen relative bg-[#d1fcdb]">
         <header>
             <!-- 遮罩 -->
             <div v-if="sidebarOpen" class="fixed inset-0 bg-black/50 z-40 cursor-pointer" @click="sidebarOpen = false">
@@ -14,9 +16,13 @@ console.log(sidebarOpen.value)
             <!-- sidebar -->
             <div v-if="sidebarOpen"
                 class="absolute bg-[#ffffff] pt-10 flex flex-col border-x border-b items-start justify-start h-screen w-60 md:w-72 shadow-[0_0px_14px_rgba(0,0,0,0.25)] z-50">
-                <!--hover顏色不錯 <NuxtLink to="/" class="w-full px-6 py-4 border-b hover:bg-[#E2E2E2]">首頁</NuxtLink> -->
-                <sidebarLink :text="'查詢'" :link="'/event'" :image-url="'/component_img/sidebar_img/timetable_icon.svg'" />
-                <sidebarLink :text="'首頁'" :link="'/'" />
+
+                <sidebarLink @click="sidebarOpen = false" :text="'課表'" :link="'/myTimetable'"
+                    :image-url="'/component_img/sidebar_img/timetable_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false" :text="'首頁'" :link="'/'" />
+                <sidebarLink @click="sidebarOpen = false" :text="'查詢'" :link="'/courseSearch'"
+                    :image-url="'/component_img/sidebar_img/search_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false" :text="'測試用'" :link="'/unAuth'" />
             </div>
 
             <!-- header本體 -->
@@ -38,11 +44,33 @@ console.log(sidebarOpen.value)
             </div>
 
             <!-- 底下顯示user -->
-            <div class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
+            <div v-if="!isShowUserInfo" class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
                 <span class="text-black text-xl md:text-2xl">歡迎</span><span
-                    class="text-[#3867DC] text-xl md:text-2xl hover:underline hover:font-medium cursor-pointer hover:text-[#0031ad]">使用者</span>
+                    class="text-[#3867DC] text-xl md:text-2xl hover:underline hover:font-medium cursor-pointer hover:text-[#0031ad]"
+                    @click="isShowUserInfo = !isShowUserInfo">使用者</span>
             </div>
         </header>
-        <slot />
+        <slot v-if="!isShowUserInfo" class="flex-1" />
+        <div v-if="isShowUserInfo" class="pt-20 w-full flex items-center justify-center ">
+            <div
+                class="bg-[#F6F6F6] relative w-[clamp(0px,120vmin,9999px)] h-[clamp(0px,75vmin,9999px)] flex items-center justify-start px-16 border-2 border-black">
+                <div class="h-full flex flex-col items-center justify-start gap-20 pt-10">
+                    <div class="">
+                        <NuxtImg src="/component_img/eye_icon.svg" alt="eyes_icon"
+                            class="border rounded-full size-20 md:size-52" />
+                    </div>
+                    <button class="bg-[#d1fcdb] border w-40 h-16 text-2xl rounded-b-sm cursor-pointer hover:font-bold hover:bg-[#74EF93]" @click="isShowUserInfo = false">上傳頭像</button>
+                </div>
+
+                <div class="absolute flex flex-col gap-2 left-1/2 -translate-x-1/2 top-20 items-center">
+                    <span class="text-4xl tracking-widest font-bold pb-16">個人帳號管理</span>
+                    <TextInput :text="'姓名'"  />
+                    <TextInput :text="'學號'"  />
+                    <TextInput :text="'系所'"  />
+                    <TextInput :text="'Email'"  />
+                </div>
+                <button class="absolute bottom-8 right-8 text-2xl w-40 h-16 border rounded-sm bg-[#23f157] cursor-pointer hover:font-bold hover:bg-[#18a83c]">確認</button>
+            </div>
+        </div>
     </div>
 </template>

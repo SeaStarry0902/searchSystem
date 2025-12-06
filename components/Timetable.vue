@@ -1,5 +1,11 @@
 <script setup>
 import timetable from '~/components/Timetable.vue'
+const props = defineProps({
+    customHeight: {
+        type: String,
+        default: ''
+    }
+})
 const weekArray = ['', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'];
 const apiResponse = ['國文', '', '英文', '', '數學', '', '', '', '', '體育', '', '', '', '', '', '', '', '', '歷史'];
 const totalCells = 112
@@ -20,7 +26,7 @@ for (let i = 0; i < totalCells; i++) {
 }
 </script>
 <template>
-    <div class="grid border-2 h-[700px] border-[#146d2b] grid-cols-8 overflow-auto ">
+    <div :class="customHeight ? customHeight : 'h-[700px]'" class="grid border-2  border-[#146d2b] grid-cols-8 overflow-auto ">
         <div v-for="(item, index) in result" :key="index"
             :class="index < 8 ? 'h-10 bg-[#EEEEEE] font-bold ' : 'h-16 bg-white'"
             class=" flex flex-col border border-[#146d2b] items-center justify-center">
