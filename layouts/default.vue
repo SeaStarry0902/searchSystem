@@ -4,7 +4,38 @@ import TextInput from '~/components/TextInput.vue';
 const sidebarOpen = ref(false)
 const isLogin = ref(false)
 const isShowUserInfo = ref(false)
-console.log(sidebarOpen.value)
+const userInfo = ref(null)
+
+const token = useCookie('access_token', {
+    path: '/'
+})
+const type = useCookie('token_type', {
+    path: '/'
+})
+if (token.value) {
+    isLogin.value = true
+    async function getUserInfo() {
+        userInfo.value = await $fetch('https://representative-winni-chongouo-b8ca194b.koyeb.app/auth/me', {
+            method: 'GET',
+            headers: {
+                'Authorization': type.value + ' ' + token.value
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+        console.log("使用者資訊：",userInfo.value)
+        console.log("使用者：",userInfo.username)
+    }
+    await getUserInfo()
+}
+else {
+    isLogin.value = false
+}
+const logout = () => {
+    token.value = null
+    type.value = null
+    navigateTo('/login')
+}
 </script>
 <template>
     <div class="flex flex-col max-w-screen h-screen relative bg-[#d1fcdb]">
@@ -36,7 +67,7 @@ console.log(sidebarOpen.value)
                     <line y1="28.5" x2="41" y2="28.5" stroke="currentColor" stroke-width="5" />
                 </svg>
                 <span class="flex-1 text-xl md:text-4xl text-black font-bold tracking-widest">國北護課程查詢系統</span>
-                <div class="flex gap-1 md:gap-4 hover:text-[#3867DC] items-center cursor-pointer">
+                <div class="flex gap-1 md:gap-4 hover:text-[#3867DC] items-center cursor-pointer" @click="logout()">
                     <NuxtImg src="/header_img/logout_icon.svg" alt="logout_icon" class="size-7 md:size-9" />
                     <!-- click後跳回login並清空cookie，這樣不論是否login都能起效? -->
                     <span class="text-xl md:text-2xl font-bold">{{ isLogin ? '登出' : '登入' }}</span>
@@ -44,10 +75,10 @@ console.log(sidebarOpen.value)
             </div>
 
             <!-- 底下顯示user -->
-            <div v-if="!isShowUserInfo" class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
+            <div v-if="!isShowUserInfo && userInfo" class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
                 <span class="text-black text-xl md:text-2xl">歡迎</span><span
                     class="text-[#3867DC] text-xl md:text-2xl hover:underline hover:font-medium cursor-pointer hover:text-[#0031ad]"
-                    @click="isShowUserInfo = !isShowUserInfo">使用者</span>
+                    @click="isShowUserInfo = !isShowUserInfo">{{ userInfo.username }}</span>
             </div>
         </header>
         <slot v-if="!isShowUserInfo" class="flex-1" />
@@ -59,17 +90,20 @@ console.log(sidebarOpen.value)
                         <NuxtImg src="/component_img/eye_icon.svg" alt="eyes_icon"
                             class="border rounded-full size-20 md:size-52" />
                     </div>
-                    <button class="bg-[#d1fcdb] border w-40 h-16 text-2xl rounded-b-sm cursor-pointer hover:font-bold hover:bg-[#74EF93]" @click="isShowUserInfo = false">上傳頭像</button>
+                    <button
+                        class="bg-[#d1fcdb] border w-40 h-16 text-2xl rounded-b-sm cursor-pointer hover:font-bold hover:bg-[#74EF93]"
+                        @click="isShowUserInfo = false">上傳頭像</button>
                 </div>
 
                 <div class="absolute flex flex-col gap-2 left-1/2 -translate-x-1/2 top-20 items-center">
                     <span class="text-4xl tracking-widest font-bold pb-16">個人帳號管理</span>
-                    <TextInput :text="'姓名'"  />
-                    <TextInput :text="'學號'"  />
-                    <TextInput :text="'系所'"  />
-                    <TextInput :text="'Email'"  />
+                    <TextInput :text="'姓名'" />
+                    <TextInput :text="'學號'" />
+                    <TextInput :text="'系所'" />
+                    <TextInput :text="'Email'" />
                 </div>
-                <button class="absolute bottom-8 right-8 text-2xl w-40 h-16 border rounded-sm bg-[#23f157] cursor-pointer hover:font-bold hover:bg-[#18a83c]">確認</button>
+                <button
+                    class="absolute bottom-8 right-8 text-2xl w-40 h-16 border rounded-sm bg-[#23f157] cursor-pointer hover:font-bold hover:bg-[#18a83c]">確認</button>
             </div>
         </div>
     </div>

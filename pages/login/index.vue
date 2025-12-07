@@ -3,9 +3,13 @@ import textInput from '~/components/TextInput.vue'
 
 const username = ref('')
 const password = ref('')
-
-
+const rememberMe = ref(false)
+// 學生:test_student
+// Test1234
+// 管理者:admin_test
+// Admin1234
 async function login() {
+    console.log("記住帳號：", rememberMe.value)
     if (!username.value || !password.value) {
         alert("請輸入完整資訊")
         return
@@ -26,7 +30,19 @@ async function login() {
     }).catch((error) => {
         alert("登入失敗，請檢查帳號密碼是否正確")
     })
-    
+    console.log(res)
+    const token = useCookie('access_token', {
+        path: '/',
+        maxAge: rememberMe? 60 * 60 * 24 * 7 : undefined
+    })
+    const type = useCookie('token_type', {
+        path: '/',
+        maxAge: rememberMe? 60 * 60 * 24 * 7 : undefined// 7天
+    })
+
+    token.value = res.access_token
+    type.value = res.token_type
+    navigateTo('/')
 }
 
 definePageMeta({
@@ -41,7 +57,7 @@ definePageMeta({
         </div>
         <div class="flex items-center justify-center">
             <label class="flex items-center justify-center gap-1 md:gap-2 cursor-pointer">
-                <input type="checkbox" class="size-3 md:size-5 cursor-pointer" />
+                <input type="checkbox" v-model="rememberMe" class="size-3 md:size-5 cursor-pointer" />
                 <span class="text-xs md:text-xl">記住帳號</span>
             </label>
         </div>
@@ -49,13 +65,14 @@ definePageMeta({
             class=" hover:font-bold hover:bg-[#069736] w-[clamp(0px,40vmin,9999px)] h-[clamp(0px,6vmin,9999px)] border border-black cursor-pointer bg-[#09ca49] rounded-[clamp(0px,1vmin,40px)] text-white text-xs md:text-xl 2xl:text-2xl">
             <span class="text-xs md:text-xl 2xl:text-2xl">登入</span>
         </button>
-        <nav class="flex items-center justify-center gap-[clamp(0px,4vmin,9999px)]">
+        <nav class="flex pt-10 items-center justify-center gap-[clamp(0px,4vmin,9999px)]">
             <NuxtLink to="/login/signup" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">註冊
             </NuxtLink>
-            <NuxtLink to="/login/forgot-password"
-                class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">忘記密碼</NuxtLink>
+            <NuxtLink to="/myTimetable"
+                class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">訪客登入</NuxtLink>
         </nav>
-        <NuxtLink to="/myTimetable" class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">
-            訪客登入</NuxtLink>
+        <!-- <NuxtLink to="/myTimetable"
+            class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">
+            訪客登入</NuxtLink> -->
     </div>
 </template>

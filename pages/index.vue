@@ -1,9 +1,12 @@
 <script setup>
 definePageMeta({
     middleware: function (to, from) {
-        const auth = useCookie('user')
-        if (!auth.value) {
+        const token = useCookie('access_token')
+        if (!token.value) {
             return navigateTo('/login')
+        }
+        else {
+            console.log("有token，放行")
         }
     }
 })
@@ -11,5 +14,6 @@ definePageMeta({
 <template>
     <div class="text-2xl text-blue-500">
         <h1>Welcome to the indexPage</h1>
+        <h2>{{  }}</h2>
     </div>
 </template>
