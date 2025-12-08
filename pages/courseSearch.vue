@@ -14,7 +14,7 @@ const courseCatagory = ref('');
 </script>
 <template>
     <div class="flex flex-col justify-center">
-        <div class="flex items-center justify-center gap-20 w-full h-auto pt-4 px-96 text-2xl text-black bg-[#d1fcdb]">
+        <div class="flex items-center justify-center gap-20 w-full h-auto pt-4 mx-auto text-2xl text-black bg-[#d1fcdb]">
             <div class="flex flex-col gap-5">
                 <div class="flex gap-5">
                     <testInput v-model="courseCatagory" :text="'課程分類'" :customWidth="'w-72'" />

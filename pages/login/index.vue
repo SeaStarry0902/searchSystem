@@ -33,11 +33,11 @@ async function login() {
     console.log(res)
     const token = useCookie('access_token', {
         path: '/',
-        maxAge: rememberMe? 60 * 60 * 24 * 7 : undefined
+        maxAge: rememberMe.value ? 60 * 60 * 24 * 7 : undefined
     })
     const type = useCookie('token_type', {
         path: '/',
-        maxAge: rememberMe? 60 * 60 * 24 * 7 : undefined// 7天
+        maxAge: rememberMe.value ? 60 * 60 * 24 * 7 : undefined// 7天
     })
 
     token.value = res.access_token
@@ -65,12 +65,21 @@ definePageMeta({
             class=" hover:font-bold hover:bg-[#069736] w-[clamp(0px,40vmin,9999px)] h-[clamp(0px,6vmin,9999px)] border border-black cursor-pointer bg-[#09ca49] rounded-[clamp(0px,1vmin,40px)] text-white text-xs md:text-xl 2xl:text-2xl">
             <span class="text-xs md:text-xl 2xl:text-2xl">登入</span>
         </button>
-        <nav class="flex pt-10 items-center justify-center gap-[clamp(0px,4vmin,9999px)]">
+        <nav class="flex items-center justify-center gap-[clamp(0px,4vmin,9999px)]">
+            <NuxtLink to="/login/signup" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">註冊
+            </NuxtLink>
+            <NuxtLink to="/login/forgot-password"
+                class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">忘記密碼</NuxtLink>
+        </nav>
+        <NuxtLink to="/myTimetable"
+            class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">
+            訪客登入</NuxtLink>
+        <!-- <nav class="flex pt-10 items-center justify-center gap-[clamp(0px,4vmin,9999px)]">
             <NuxtLink to="/login/signup" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">註冊
             </NuxtLink>
             <NuxtLink to="/myTimetable"
                 class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">訪客登入</NuxtLink>
-        </nav>
+        </nav> -->
         <!-- <NuxtLink to="/myTimetable"
             class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">
             訪客登入</NuxtLink> -->
