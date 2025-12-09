@@ -12,8 +12,9 @@ const weekResult = ref({
     星期六: false,
     星期日: false
 })
-const response = [];
-const courseCatagory = ref('');
+const response = []
+const courseCatagory = ref('')
+const showChooceTime = ref(false)
 </script>
 <template>
     <div class="flex flex-col justify-center gap-10">
@@ -31,7 +32,7 @@ const courseCatagory = ref('');
                     <testInput :text="'系所'" :customWidth="'w-16 md:w-40 2xl:w-70'" :options="['選項1', '選項2']" />
                     <testInput :text="'年級'" :customWidth="'w-16 md:w-40 2xl:w-70'" :options="['1', '2', '3', '4']" />
                     <button class="bg-white w-16 md:w-40 2xl:w-70 h-[clamp(0px,6vmin,9999px)] border rounded-[clamp(0px,1vmin,40px)] cursor-pointer hover:bg-[#6ffc92] hover:font-bold 
-                    text-xs md:text-xl 2xl:text-2xl">時間選擇</button>
+                    text-xs md:text-xl 2xl:text-2xl" @click="showChooceTime = true">時間選擇</button>
                 </div>
             </div>
         </div>
@@ -48,10 +49,12 @@ const courseCatagory = ref('');
         </div>
     </div>
     <!-- 時間選擇 -->
-    <div class=" fixed flex items-center justify-center inset-0 bg-black/50 z-40 ">
+    <div v-if="showChooceTime" class=" fixed flex items-center justify-center inset-0 bg-black/50 z-40 ">
         <div
             class="flex flex-col items-center w-[clamp(0px,70vw,9999px)] h-[clamp(0px,80vh,9999px)] pt-10 gap-5 rounded-lg bg-[#d1fcdb] z-50 border">
-            <span class="text-3xl font-bold">時間表</span>
+            <div class=" cursor-pointer" @click="showChooceTime = false">
+                <span class="text-3xl font-bold">時間表</span>
+            </div>
             <div class="border w-full h-px"></div>
             <nav class="flex px-20 w-full justify-between overflow-auto">
                 <div v-for="value in weekArray" class="text-2xl flex w-40">
