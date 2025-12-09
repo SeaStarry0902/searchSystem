@@ -71,7 +71,7 @@ definePageMeta({
             <NuxtLink to="/login/forgot-password"
                 class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">忘記密碼</NuxtLink>
         </nav>
-        <NuxtLink to="/myTimetable"
+        <NuxtLink to="/courseSearch"
             class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">
             訪客登入</NuxtLink>
         <!-- <nav class="flex pt-10 items-center justify-center gap-[clamp(0px,4vmin,9999px)]">

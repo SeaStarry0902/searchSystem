@@ -23,8 +23,8 @@ if (token.value) {
         }).catch((error) => {
             console.log(error)
         })
-        console.log("使用者資訊：",userInfo.value)
-        console.log("使用者：",userInfo.username)
+        console.log("使用者資訊：", userInfo.value)
+        console.log("使用者：", userInfo.username)
     }
     await getUserInfo()
 }
@@ -75,7 +75,8 @@ const logout = () => {
             </div>
 
             <!-- 底下顯示user -->
-            <div v-if="!isShowUserInfo && userInfo" class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
+            <div v-if="!isShowUserInfo && userInfo"
+                class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
                 <span class="text-black text-xl md:text-2xl">歡迎</span><span
                     class="text-[#3867DC] text-xl md:text-2xl hover:underline hover:font-medium cursor-pointer hover:text-[#0031ad]"
                     @click="isShowUserInfo = !isShowUserInfo">{{ userInfo.username }}</span>
@@ -84,8 +85,19 @@ const logout = () => {
         <slot v-if="!isShowUserInfo" class="flex-1" />
         <div v-if="isShowUserInfo" class="pt-20 w-full flex items-center justify-center ">
             <div
-                class="bg-[#F6F6F6] relative w-[clamp(0px,120vmin,9999px)] h-[clamp(0px,75vmin,9999px)] flex items-center justify-start px-16 border-2 border-black">
-                <div class="h-full flex flex-col items-center justify-start gap-20 pt-10">
+                class="bg-[#F6F6F6] relative w-[clamp(0px,120vmin,9999px)] h-[clamp(0px,75vmin,9999px)] flex justify-center pt-20 mx-auto border-2 border-black">
+                <div class="w-full flex flex-col gap-20 items-center">
+                    <span class="text-4xl tracking-widest font-bold">個人帳號管理</span>
+                    <nav class="w-full flex flex-col items-center ">
+                        <div class="flex-col flex gap-16 ">
+                            <span class="text-4xl tracking-widest">名字:<span class=" ">Sea{{ }}</span></span>
+                            <span class="text-4xl tracking-widest">學號:<span class=" ">122214136{{ }}</span></span>
+                            <span class="text-4xl tracking-widest">系所:<span class=" ">資訊管理系{{ }}</span></span>
+                            <span class="text-4xl tracking-normal">Email:<span class=" pl-1">zzznn.chen@gmail.com{{ }}</span></span>
+                        </div>
+                    </nav>
+                </div>
+                <div class="absolute h-full flex flex-col items-center gap-20 top-10 left-16">
                     <div class="">
                         <NuxtImg src="/component_img/eye_icon.svg" alt="eyes_icon"
                             class="border rounded-full size-20 md:size-52" />
@@ -95,15 +107,8 @@ const logout = () => {
                         @click="isShowUserInfo = false">上傳頭像</button>
                 </div>
 
-                <div class="absolute flex flex-col gap-2 left-1/2 -translate-x-1/2 top-20 items-center">
-                    <span class="text-4xl tracking-widest font-bold pb-16">個人帳號管理</span>
-                    <TextInput :text="'姓名'" />
-                    <TextInput :text="'學號'" />
-                    <TextInput :text="'系所'" />
-                    <TextInput :text="'Email'" />
-                </div>
                 <button
-                    class="absolute bottom-8 right-8 text-2xl w-40 h-16 border rounded-sm bg-[#23f157] cursor-pointer hover:font-bold hover:bg-[#18a83c]">確認</button>
+                    class="absolute bottom-8 right-8 text-2xl w-40 h-16 border rounded-sm bg-[#23f157] cursor-pointer hover:font-bold hover:bg-[#18a83c]">儲存</button>
             </div>
         </div>
     </div>

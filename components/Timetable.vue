@@ -147,7 +147,7 @@ const result = [...weekArray, ...apiCourseNameArray];
             class=" flex flex-col border border-[#146d2b] items-center justify-center">
             <div class="text-xl text-center leading-5">{{ item }}</div>
             <!-- <span :class="index < 8 ? 'hidden' : item && index % 8 != 0 ? 'text-xs' : 'hidden'">B123</span> -->
-            <span class="text-xs">{{ apiCourseLocationArray[index] }}</span>
+            <span class="text-base text-[#3867DC] font-bold">{{ apiCourseLocationArray[index] }}</span>
         </div>
     </div>
 </template>
