@@ -50,7 +50,7 @@ definePageMeta({
 })
 </script>
 <template>
-    <div class="flex flex-col justify-center items-center mt-[clamp(0px,5vmin,9999px)] gap-[clamp(0px,3vmin,9999px)]">
+    <div class="flex flex-col justify-center items-center mt-[clamp(0px,5vmin,9999px)] gap-[clamp(0px,2.5vmin,9999px)]">
         <div class="flex flex-col gap-[clamp(0px,3vmin,9999px)]">
             <textInput v-model="username" id="username" :text="'學號'" />
             <textInput v-model="password" id="password" :text="'密碼'" :showIcon="true" />
@@ -72,7 +72,7 @@ definePageMeta({
                 class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">忘記密碼</NuxtLink>
         </nav>
         <NuxtLink to="/courseSearch"
-            class="md:pt-2 2xl:pt-4 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">
+            class="md:pt-1 2xl:pt-3 text-[#3867DC] text-xs md:text-xl 2xl:text-2xl hover:font-bold">
             訪客登入</NuxtLink>
         <!-- <nav class="flex pt-10 items-center justify-center gap-[clamp(0px,4vmin,9999px)]">
             <NuxtLink to="/login/signup" class="text-[#3867DC] text-xs md:text-xl 2xl:text-2xl  hover:font-bold">註冊

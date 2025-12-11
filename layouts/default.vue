@@ -1,35 +1,57 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import sidebarLink from '~/components/sidebarLink.vue';
 import TextInput from '~/components/TextInput.vue';
-const sidebarOpen = ref(false)
-const isLogin = ref(false)
-const isShowUserInfo = ref(false)
-const userInfo = ref(null)
-
+onMounted(() => {
+    getUserInfo()
+})
 const token = useCookie('access_token', {
     path: '/'
 })
 const type = useCookie('token_type', {
     path: '/'
 })
-if (token.value) {
-    isLogin.value = true
-    async function getUserInfo() {
-        userInfo.value = await $fetch('https://representative-winni-chongouo-b8ca194b.koyeb.app/auth/me', {
-            method: 'GET',
+const fileInput = ref(null)
+const sidebarOpen = ref(false)
+const isLogin = !!token.value
+const isLoading = ref(true)
+const isShowUserInfo = ref(false)
+const userInfo = ref(null)
+const baseURL = 'https://representative-winni-chongouo-b8ca194b.koyeb.app'
+async function handleFile(event) {
+    const file = event.target.files[0]
+    const allowed = ['image/jpeg', 'image/png', 'image/webp']
+    const formData = new FormData()
+    formData.append('file', file, file.name)
+    if (!allowed.includes(file.type)) {
+        alert('只能上傳 .jpeg, .jpg, .png, .webp 格式')
+        return
+    }
+    if (file) {
+        await $fetch('https://representative-winni-chongouo-b8ca194b.koyeb.app/students/me/avatar', {
+            method: 'POST',
             headers: {
                 'Authorization': type.value + ' ' + token.value
-            }
-        }).catch((error) => {
-            console.log(error)
+            },
+            body: formData
         })
-        console.log("使用者資訊：", userInfo.value)
-        console.log("使用者：", userInfo.username)
+        await getUserInfo()
+        alert('上傳成功!')
     }
-    await getUserInfo()
 }
-else {
-    isLogin.value = false
+async function getUserInfo() {
+    isLoading.value = true
+    userInfo.value = await $fetch('https://representative-winni-chongouo-b8ca194b.koyeb.app/students/me', {
+        method: 'GET',
+        headers: {
+            'Authorization': type.value + ' ' + token.value,
+            'Content-Type': 'application/json'
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
+    console.log("使用者資訊：", userInfo.value)
+    isLoading.value = false
 }
 const logout = () => {
     token.value = null
@@ -75,40 +97,53 @@ const logout = () => {
             </div>
 
             <!-- 底下顯示user -->
-            <div v-if="!isShowUserInfo && userInfo"
+            <div v-if="!isShowUserInfo && isLogin"
                 class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
                 <span class="text-black text-xl md:text-2xl">歡迎</span><span
                     class="text-[#3867DC] text-xl md:text-2xl hover:underline hover:font-medium cursor-pointer hover:text-[#0031ad]"
-                    @click="isShowUserInfo = !isShowUserInfo">{{ userInfo.username }}</span>
+                    @click="isShowUserInfo = true">{{ isLoading ? `` : userInfo.student_no }}</span>
             </div>
         </header>
         <slot v-if="!isShowUserInfo" class="flex-1" />
         <div v-if="isShowUserInfo" class="pt-20 w-full flex items-center justify-center ">
             <div
-                class="bg-[#F6F6F6] relative w-[clamp(0px,120vmin,9999px)] h-[clamp(0px,75vmin,9999px)] flex justify-center pt-20 mx-auto border-2 border-black">
-                <div class="w-full flex flex-col gap-20 items-center">
+                class="bg-[#F6F6F6]  w-[clamp(0px,120vmin,9999px)] h-[clamp(0px,75vmin,9999px)] flex justify-between pt-20 px-10 mx-auto border-2 border-black">
+                <div class=" h-full flex flex-col items-center gap-20">
+                    <div class=" w-auto">
+                        <NuxtImg
+                            :src="userInfo.avatar_url ? baseURL + userInfo.avatar_url : '/component_img/eye_icon.svg'"
+                            alt="userPhoto" class="border rounded-full size-20 md:size-52" />
+                        <!-- <NuxtImg
+                            :src="userInfo.value.avatar_url ? baseURL + userInfo.value.avatar_url : '/component_img/eye_icon.svg'"
+                            alt="eyes_icon" class="border rounded-full size-20 md:size-52" /> -->
+                    </div>
+                    <input type="file" ref="fileInput" accept=".jpeg,.jpg,.png,.webp" @change="handleFile"
+                        style="display: none" />
+                    <button
+                        class="bg-[#d1fcdb] border w-40 h-16 text-2xl rounded-b-sm cursor-pointer hover:font-bold hover:bg-[#74EF93]"
+                        @click="fileInput.click()">上傳頭像</button>
+                </div>
+                <div class="w-auto flex flex-col gap-20 items-center">
                     <span class="text-4xl tracking-widest font-bold">個人帳號管理</span>
                     <nav class="w-full flex flex-col items-center ">
                         <div class="flex-col flex gap-16 ">
-                            <span class="text-4xl tracking-widest">名字:<span class=" ">Sea{{ }}</span></span>
-                            <span class="text-4xl tracking-widest">學號:<span class=" ">122214136{{ }}</span></span>
-                            <span class="text-4xl tracking-widest">系所:<span class=" ">資訊管理系{{ }}</span></span>
-                            <span class="text-4xl tracking-normal">Email:<span class=" pl-1">zzznn.chen@gmail.com{{ }}</span></span>
+                            <span class="text-4xl tracking-widest">名字:<span class=" ">{{ userInfo.full_name
+                                    }}</span></span>
+                            <span class="text-4xl tracking-widest">學號:<span class=" ">{{ userInfo.student_no
+                                    }}</span></span>
+                            <span class="text-4xl tracking-widest">系所:<span class=" ">{{ userInfo.department_name
+                                    }}</span></span>
+                            <span class="text-4xl tracking-normal">Email:<span class=" pl-1">{{ userInfo.email
+                                    }}</span></span>
                         </div>
                     </nav>
                 </div>
-                <div class="absolute h-full flex flex-col items-center gap-20 top-10 left-16">
-                    <div class="">
-                        <NuxtImg src="/component_img/eye_icon.svg" alt="eyes_icon"
-                            class="border rounded-full size-20 md:size-52" />
-                    </div>
+                <div class="flex flex-col h-full justify-end pb-10">
                     <button
-                        class="bg-[#d1fcdb] border w-40 h-16 text-2xl rounded-b-sm cursor-pointer hover:font-bold hover:bg-[#74EF93]"
-                        @click="isShowUserInfo = false">上傳頭像</button>
+                        class="text-2xl w-40 h-16 border rounded-sm bg-[#23f157] cursor-pointer hover:font-bold hover:bg-[#18a83c]"
+                        @click="isShowUserInfo = false">確認</button>
                 </div>
 
-                <button
-                    class="absolute bottom-8 right-8 text-2xl w-40 h-16 border rounded-sm bg-[#23f157] cursor-pointer hover:font-bold hover:bg-[#18a83c]">儲存</button>
             </div>
         </div>
     </div>

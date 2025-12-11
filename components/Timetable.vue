@@ -20,13 +20,8 @@ async function getCourse() {
         console.log(error)
     })
     console.log("課表資料：", apiResult.value)
-
 }
-// 目前可以取得該星期的課有哪些，接著在底下的switch裡再根據period去篩選時間，像是period=1，就去找有沒有end_section>=period>=start_section，
-// 有的話就push進apiCourseNameArray，並且把地點也push進apiCourseLocationArray，沒有的話就只push('')進Name那個，
-// 最後Name會塞進result，每次判斷是課程格(index%8!=0)且有課程(item)，就從Location取一個出來，就不會出現對不上的情況 
 await getCourse()
-// const monCourse = apiResult.value.flatMap(course => course.times).filter(t => t.weekday === 1)
 const monCourse = apiResult.value.flatMap(course => course.times.map(t => ({ ...course, ...t }))).filter(c => c.weekday === 1);
 const tueCourse = apiResult.value.flatMap(course => course.times.map(t => ({ ...course, ...t }))).filter(c => c.weekday === 2);
 const wedCourse = apiResult.value.flatMap(course => course.times.map(t => ({ ...course, ...t }))).filter(c => c.weekday === 3);
@@ -34,14 +29,6 @@ const thuCourse = apiResult.value.flatMap(course => course.times.map(t => ({ ...
 const friCourse = apiResult.value.flatMap(course => course.times.map(t => ({ ...course, ...t }))).filter(c => c.weekday === 5);
 const satCourse = apiResult.value.flatMap(course => course.times.map(t => ({ ...course, ...t }))).filter(c => c.weekday === 6);
 const sunCourse = apiResult.value.flatMap(course => course.times.map(t => ({ ...course, ...t }))).filter(c => c.weekday === 7);
-// const tueCourse = apiResult.value.filter(course => course.weekday === 2);
-// const wedCourse = apiResult.value.filter(course => course.weekday === 3);
-// const thuCourse = apiResult.value.filter(course => course.weekday === 4);
-// const friCourse = apiResult.value.filter(course => course.weekday === 5);
-// const satCourse = apiResult.value.filter(course => course.weekday === 6);
-// const sunCourse = apiResult.value.filter(course => course.weekday === 7);
-console.log("星期一課程：", monCourse);
-console.log("星期二課程：", tueCourse);
 
 
 

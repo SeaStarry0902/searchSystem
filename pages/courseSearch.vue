@@ -100,7 +100,6 @@ function showResult() {
         if (apiResponse.value.items[key].id === lastId)
             continue
         const temData = apiResponse.value.items[key]
-        // console.log(apiResponse.value.items[key].name_zh)
         courseArray.push(idx)
         courseArray.push(temData.semester)
         courseArray.push(temData.department_name)
@@ -151,6 +150,8 @@ async function courseSearch() {
     showResult()
 }
 async function addFavorite(idx) {
+    if (!token.value)
+        return
     favoriteArray.value[idx] = true
     await $fetch(`https://representative-winni-chongouo-b8ca194b.koyeb.app/favorites/${courseIdArray[idx]}`, {
         method: 'POST',
