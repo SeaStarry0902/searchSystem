@@ -13,7 +13,7 @@ const type = useCookie('token_type', {
 })
 const fileInput = ref(null)
 const sidebarOpen = ref(false)
-const isLogin = !!token.value
+let isLogin = ref(false)
 const isLoading = ref(true)
 const isShowUserInfo = ref(false)
 const userInfo = ref(null)
@@ -40,6 +40,8 @@ async function handleFile(event) {
     }
 }
 async function getUserInfo() {
+    if (!token.value)
+        return
     isLoading.value = true
     userInfo.value = await $fetch('https://representative-winni-chongouo-b8ca194b.koyeb.app/students/me', {
         method: 'GET',
@@ -52,6 +54,7 @@ async function getUserInfo() {
     })
     console.log("使用者資訊：", userInfo.value)
     isLoading.value = false
+    isLogin.value = true
 }
 const logout = () => {
     token.value = null
@@ -70,12 +73,13 @@ const logout = () => {
             <div v-if="sidebarOpen"
                 class="absolute bg-[#ffffff] pt-10 flex flex-col border-x border-b items-start justify-start h-screen w-60 md:w-72 shadow-[0_0px_14px_rgba(0,0,0,0.25)] z-50">
 
-                <sidebarLink @click="sidebarOpen = false" :text="'課表'" :link="'/myTimetable'"
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'課表'" :link="'/myTimetable'"
                     :image-url="'/component_img/sidebar_img/timetable_icon.svg'" />
-                <sidebarLink @click="sidebarOpen = false" :text="'首頁'" :link="'/'" />
-                <sidebarLink @click="sidebarOpen = false" :text="'查詢'" :link="'/courseSearch'"
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'查詢'" :link="'/courseSearch'"
                     :image-url="'/component_img/sidebar_img/search_icon.svg'" />
-                <sidebarLink @click="sidebarOpen = false" :text="'測試用'" :link="'/unAuth'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'測試用'" :link="'/unAuth'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'收藏'" :link="'/favoriteCourse'"
+                    :image-url="'/component_img/sidebar_img/favorites_icon.svg'" />
             </div>
 
             <!-- header本體 -->
@@ -94,6 +98,7 @@ const logout = () => {
                     <!-- click後跳回login並清空cookie，這樣不論是否login都能起效? -->
                     <span class="text-xl md:text-2xl font-bold">{{ isLogin ? '登出' : '登入' }}</span>
                 </div>
+
             </div>
 
             <!-- 底下顯示user -->
@@ -101,7 +106,8 @@ const logout = () => {
                 class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
                 <span class="text-black text-xl md:text-2xl">歡迎</span><span
                     class="text-[#3867DC] text-xl md:text-2xl hover:underline hover:font-medium cursor-pointer hover:text-[#0031ad]"
-                    @click="isShowUserInfo = true">{{ isLoading ? `` : userInfo.student_no }}</span>
+                    @click="isShowUserInfo = true">{{ userInfo.full_name ? userInfo.full_name : userInfo.student_no
+                    }}</span>
             </div>
         </header>
         <slot v-if="!isShowUserInfo" class="flex-1" />

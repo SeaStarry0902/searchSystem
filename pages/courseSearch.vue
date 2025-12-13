@@ -7,11 +7,11 @@ let temDay = 1
 let temSec = 1
 const token = useCookie('access_token')
 const type = useCookie('token_type')
-const courseArray = ['編號', '學期', '系所', '年級', '課程名稱', '教師', '上課人數', '學分', '課別', '地點', '星期', '節次', '收藏']
+let courseArray = ['編號', '學期', '系所', '年級', '課程名稱', '教師', '上課人數', '學分', '課別', '地點', '星期', '節次', '收藏']
 const weekArray = ["一", "二", "三", "四", "五", "六", "日"]
 const result = []
 let favoriteArray = ref([])
-const courseIdArray = []
+let courseIdArray = ref([])
 const apiResponse = ref(null)
 const keyword = ref('')
 const semester = ref('')
@@ -58,7 +58,7 @@ function buildUrl() {
             params.push(`time_slots=${result[item]}`)
         }
     }
-    newURL += `${params.join('&')}&page=1&page_size=60`
+    newURL += `${params.join('&')}&page=1&page_size=100`
     console.log('這是查詢用的' + newURL)
 }
 function toggleDay(day) {
@@ -93,9 +93,13 @@ function saveResult() {
     showChooceTime.value = false
 }
 function showResult() {
-    showTable.value = true
+    console.log("showResult進入")
+    showTable.value = false
     let idx = 1
     let lastId = ''
+    courseArray = ['編號', '學期', '系所', '年級', '課程名稱', '教師', '上課人數', '學分', '課別', '地點', '星期', '節次', '收藏']
+    favoriteArray.value = []
+    courseIdArray.value = []
     for (let key = 0; key < apiResponse.value.items.length; key++) {
         if (apiResponse.value.items[key].id === lastId)
             continue
@@ -114,10 +118,13 @@ function showResult() {
         courseArray.push(`${temData.times[0].start_section === temData.times[0].end_section ? temData.times[0].start_section : temData.times[0].start_section + '~' + temData.times[0].end_section}節`)
         courseArray.push(temData.is_favorite)
         favoriteArray.value.push(temData.is_favorite)
-        courseIdArray.push(temData.id)
+        courseIdArray.value.push(temData.id)
         idx++
         lastId = temData.id
     }
+    console.log("showResult離開")
+    console.log(favoriteArray.value)
+    showTable.value = true
 }
 async function downloadExcel() {
     newURL = baseExcelURL
@@ -153,7 +160,7 @@ async function addFavorite(idx) {
     if (!token.value)
         return
     favoriteArray.value[idx] = true
-    await $fetch(`https://representative-winni-chongouo-b8ca194b.koyeb.app/favorites/${courseIdArray[idx]}`, {
+    await $fetch(`https://representative-winni-chongouo-b8ca194b.koyeb.app/favorites/${courseIdArray.value[idx]}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -215,6 +222,7 @@ async function addFavorite(idx) {
                     :class="index > 13 && index % 13 === 12 ? `${favoriteArray[Math.floor((index - 13) / 13)] ? 'text-[#ffff00]' : 'text-white hover:text-[#ffff00] cursor-pointer'}` : 'hidden'"
                     xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
                     stroke="black" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <title>收藏課程</title>
                     <polygon
                         points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
                     </polygon>
