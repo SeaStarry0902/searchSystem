@@ -209,9 +209,6 @@ async function addFavorite(idx) {
             <button class="bg-[#6ffc92] w-30 h-10 border rounded cursor-pointer hover:bg-[#23f157] hover:font-bold"
                 @click="downloadExcel()">匯出</button>
         </div>
-        <!-- <div class="absolute right-2 top-0">
-            <button class="w-30 h-10 border rounded-lg bg-[#23f157] cursor-pointer hover:bg-[#18a83c] hover:font-bold" @click="showFilters = !showFilters">{{ showFilters? '隱藏條件' : '顯示條件' }}</button>
-        </div> -->
         <div
             class=" inline-grid h-auto grid-cols-[60px_100px_180px_40px_400px_100px_80px_40px_200px_100px_40px_100px_60px]  ">
             <div v-for="(item, index) in courseArray" :key="index"

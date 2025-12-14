@@ -73,13 +73,15 @@ const logout = () => {
             <div v-if="sidebarOpen"
                 class="absolute bg-[#ffffff] pt-10 flex flex-col border-x border-b items-start justify-start h-screen w-60 md:w-72 shadow-[0_0px_14px_rgba(0,0,0,0.25)] z-50">
 
-                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'課表'" :link="'/myTimetable'"
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'我的課表'" :link="'/myTimetable'"
                     :image-url="'/component_img/sidebar_img/timetable_icon.svg'" />
-                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'查詢'" :link="'/courseSearch'"
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'課程查詢'" :link="'/courseSearch'"
                     :image-url="'/component_img/sidebar_img/search_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'測試用'" :link="'/unAuth'" />
-                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'收藏'" :link="'/favoriteCourse'"
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'收藏課程'" :link="'/favoriteCourse'"
                     :image-url="'/component_img/sidebar_img/favorites_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'學分查詢'" :link="'/myCredit'"
+                    :image-url="'/component_img/sidebar_img/search_icon.svg'" />
             </div>
 
             <!-- header本體 -->
@@ -134,13 +136,13 @@ const logout = () => {
                     <nav class="w-full flex flex-col items-center ">
                         <div class="flex-col flex gap-16 ">
                             <span class="text-4xl tracking-widest">名字:<span class=" ">{{ userInfo.full_name
-                                    }}</span></span>
+                            }}</span></span>
                             <span class="text-4xl tracking-widest">學號:<span class=" ">{{ userInfo.student_no
-                                    }}</span></span>
+                            }}</span></span>
                             <span class="text-4xl tracking-widest">系所:<span class=" ">{{ userInfo.department_name
-                                    }}</span></span>
+                            }}</span></span>
                             <span class="text-4xl tracking-normal">Email:<span class=" pl-1">{{ userInfo.email
-                                    }}</span></span>
+                            }}</span></span>
                         </div>
                     </nav>
                 </div>

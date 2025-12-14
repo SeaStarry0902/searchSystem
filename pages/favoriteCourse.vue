@@ -73,11 +73,11 @@ async function deleteFavorite(idx) {
 }
 </script>
 <template>
-    <div class="w-full h-screen flex flex-col items-center pt-4 mx-auto ">
+    <div class="w-full  flex flex-col items-center pt-4 mx-auto overflow-auto ">
         <div class="w-full flex justify-center pb-10 text-4xl font-bold">
             <span>收藏課程</span>
         </div>
-        <div v-if="showTable" class="mt-10 flex flex-col items-center overflow-auto w-full gap-5">
+        <div v-if="showTable" class="mt-10 flex flex-col items-center w-full gap-5">
             <div
                 class=" inline-grid h-auto grid-cols-[60px_100px_180px_40px_400px_100px_80px_40px_200px_100px_40px_100px_60px]  ">
                 <div v-for="(item, index) in courseArray" :key="index"
