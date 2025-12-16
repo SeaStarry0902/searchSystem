@@ -78,10 +78,12 @@ const logout = () => {
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'課程查詢'" :link="'/courseSearch'"
                     :image-url="'/component_img/sidebar_img/search_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'測試用'" :link="'/unAuth'" />
-                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'收藏課程'" :link="'/favoriteCourse'"
-                    :image-url="'/component_img/sidebar_img/favorites_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'收藏課程'"
+                    :link="'/favoriteCourse'" :image-url="'/component_img/sidebar_img/favorites_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'學分查詢'" :link="'/myCredit'"
                     :image-url="'/component_img/sidebar_img/search_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'預選課'" :link="'/simulated'"
+                    :image-url="'/component_img/sidebar_img/preselect_icon.svg'" />
             </div>
 
             <!-- header本體 -->
@@ -136,13 +138,13 @@ const logout = () => {
                     <nav class="w-full flex flex-col items-center ">
                         <div class="flex-col flex gap-16 ">
                             <span class="text-4xl tracking-widest">名字:<span class=" ">{{ userInfo.full_name
-                            }}</span></span>
+                                    }}</span></span>
                             <span class="text-4xl tracking-widest">學號:<span class=" ">{{ userInfo.student_no
-                            }}</span></span>
+                                    }}</span></span>
                             <span class="text-4xl tracking-widest">系所:<span class=" ">{{ userInfo.department_name
-                            }}</span></span>
+                                    }}</span></span>
                             <span class="text-4xl tracking-normal">Email:<span class=" pl-1">{{ userInfo.email
-                            }}</span></span>
+                                    }}</span></span>
                         </div>
                     </nav>
                 </div>

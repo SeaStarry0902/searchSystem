@@ -266,25 +266,6 @@ async function addFavorite(idx) {
                 <button class="text-2xl text-black hover:font-bold cursor-pointer"
                     @click="saveResult()"><span>確認</span></button>
             </div>
-            <!-- <nav class="flex px-20 w-full justify-between overflow-auto">
-                <div v-for="value in weekArray" class="text-2xl flex w-40">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" class="size-6  cursor-pointer" v-model="weekResult[value]" />
-                        <span>{{ value }}</span>
-                    </label>
-                </div>
-            </nav>
-            <div class="border w-full h-px"></div>
-            <nav class="flex px-20 w-full justify-between overflow-auto">
-                <div v-for="value in 7" class="text-2xl w-40 flex flex-col gap-4">
-                    <div v-for="value in 14" class="flex flex-col">
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" class="size-6  cursor-pointer" v-model="weekResult[value]" />
-                            <span>第{{ value }}節</span>
-                        </label>
-                    </div>
-                </div>
-            </nav> -->
         </div>
     </div>
 </template>

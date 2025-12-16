@@ -38,7 +38,7 @@ const weekArray = ['', '星期一', '星期二', '星期三', '星期四', '星�
 const apiCourseNameArray = []
 const apiCourseLocationArray = ['', '', '', '', '', '', '', '']
 // 最多12個字
-const totalCells = 112
+const totalCells = 120
 var period = 0
 for (let i = 0; i < totalCells - weekArray.length; i++) {
     let week = i % 8;

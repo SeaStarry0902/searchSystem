@@ -12,7 +12,7 @@ definePageMeta({
 
 <template>
     <div class="w-full h-screen flex flex-col items-center pt-4 mx-auto text-2xl text-black bg-[#d1fcdb]">
-        <div class="w-full flex justify-center pb-10 text-4xl font-bold">
+        <div class="w-[clamp(0px,70vw,9999px)] flex justify-start pb-10 text-4xl font-bold">
             <span>我的課表</span>
         </div>
         <timetable />
