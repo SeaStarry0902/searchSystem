@@ -1,13 +1,8 @@
 <script setup>
 import textInput from '~/components/TextInput.vue'
-
 const username = ref('')
 const password = ref('')
 const rememberMe = ref(false)
-// 學生:test_student
-// Test1234
-// 管理者:admin_test
-// Admin1234
 async function login() {
     console.log("記住帳號：", rememberMe.value)
     if (!username.value || !password.value) {
