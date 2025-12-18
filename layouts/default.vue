@@ -4,6 +4,7 @@ import sidebarLink from '~/components/sidebarLink.vue';
 import TextInput from '~/components/TextInput.vue';
 onMounted(() => {
     getUserInfo()
+    getRole()
 })
 const token = useCookie('access_token', {
     path: '/'
@@ -12,6 +13,7 @@ const type = useCookie('token_type', {
     path: '/'
 })
 const fileInput = ref(null)
+let role = ref('')
 const sidebarOpen = ref(false)
 let isLogin = ref(false)
 const isLoading = ref(true)
@@ -61,6 +63,16 @@ const logout = () => {
     type.value = null
     navigateTo('/login')
 }
+async function getRole() {
+    let temRole = ref('')
+    temRole.value = await $fetch('https://representative-winni-chongouo-b8ca194b.koyeb.app/auth/me', {
+        method: 'GET',
+        headers: {
+            'Authorization': type.value + ' ' + token.value
+        }
+    })
+    role.value = temRole.value.role
+}
 </script>
 <template>
     <div class="flex flex-col max-w-screen h-screen relative bg-[#d1fcdb]">
@@ -70,20 +82,26 @@ const logout = () => {
             </div>
 
             <!-- sidebar -->
-            <div v-if="sidebarOpen"
+            <div v-if="sidebarOpen && role !== 'admin'"
                 class="absolute bg-[#ffffff] pt-10 flex flex-col border-x border-b items-start justify-start h-screen w-60 md:w-72 shadow-[0_0px_14px_rgba(0,0,0,0.25)] z-50">
-
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'我的課表'" :link="'/myTimetable'"
                     :image-url="'/component_img/sidebar_img/timetable_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'課程查詢'" :link="'/courseSearch'"
                     :image-url="'/component_img/sidebar_img/search_icon.svg'" />
-                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'測試用'" :link="'/unAuth'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'收藏課程'"
                     :link="'/favoriteCourse'" :image-url="'/component_img/sidebar_img/favorites_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'學分查詢'" :link="'/myCredit'"
                     :image-url="'/component_img/sidebar_img/search_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'預選課'" :link="'/simulated'"
                     :image-url="'/component_img/sidebar_img/preselect_icon.svg'" />
+            </div>
+            <div v-if="sidebarOpen && role === 'admin'"
+                class="absolute bg-[#ffffff] pt-10 flex flex-col border-x border-b items-start justify-start h-screen w-60 md:w-72 shadow-[0_0px_14px_rgba(0,0,0,0.25)] z-50">
+
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'所有個人帳號管理'"
+                    :link="'/admin/allUserInfo'" :image-url="'/component_img/sidebar_img/all-accounts_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'課程管理'"
+                    :link="'/admin/allCourseInfo'" :image-url="'/component_img/sidebar_img/timetable_icon.svg'" />
             </div>
 
             <!-- header本體 -->
@@ -106,7 +124,7 @@ const logout = () => {
             </div>
 
             <!-- 底下顯示user -->
-            <div v-if="!isShowUserInfo && isLogin"
+            <div v-if="!isShowUserInfo && isLogin && role !== 'admin'"
                 class="max-w-screen flex justify-end pr-5 md:pr-10 pt-4 bg-[#d1fcdb]">
                 <span class="text-black text-xl md:text-2xl">歡迎</span><span
                     class="text-[#3867DC] text-xl md:text-2xl hover:underline hover:font-medium cursor-pointer hover:text-[#0031ad]"
@@ -138,13 +156,13 @@ const logout = () => {
                     <nav class="w-full flex flex-col items-center ">
                         <div class="flex-col flex gap-16 ">
                             <span class="text-4xl tracking-widest">名字:<span class=" ">{{ userInfo.full_name
-                                    }}</span></span>
+                            }}</span></span>
                             <span class="text-4xl tracking-widest">學號:<span class=" ">{{ userInfo.student_no
-                                    }}</span></span>
+                            }}</span></span>
                             <span class="text-4xl tracking-widest">系所:<span class=" ">{{ userInfo.department_name
-                                    }}</span></span>
+                            }}</span></span>
                             <span class="text-4xl tracking-normal">Email:<span class=" pl-1">{{ userInfo.email
-                                    }}</span></span>
+                            }}</span></span>
                         </div>
                     </nav>
                 </div>
