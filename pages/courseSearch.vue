@@ -172,7 +172,8 @@ async function addFavorite(idx) {
 </script>
 <template>
     <!-- 篩選條件 -->
-    <div v-if="showFilters" class="flex flex-col justify-center gap-10">
+    <div v-if="showFilters" class="flex flex-col items-center justify-center pt-10 ">
+        <span class="text-6xl">課程查詢</span>
         <div
             class="flex items-center justify-center gap-20 w-full h-auto pt-4 mx-auto text-2xl text-black bg-[#d1fcdb]">
             <div class="max-w-screen flex flex-col gap-5">
@@ -194,7 +195,7 @@ async function addFavorite(idx) {
                 </div>
             </div>
         </div>
-        <div class="flex items-center justify-center w-full">
+        <div class="flex items-center justify-center w-full pt-10">
             <button
                 class="bg-[#23f157] w-96 h-16 border-2 rounded cursor-pointer hover:bg-[#18a83c] hover:font-bold text-3xl"
                 @click="courseSearch()">搜尋</button>

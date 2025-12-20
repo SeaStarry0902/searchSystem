@@ -254,9 +254,10 @@ async function createNewCourse() {
 </script>
 <template>
     <!-- 篩選條件 -->
-    <div v-if="showFilters" class="flex flex-col justify-center gap-10">
+    <div v-if="showFilters" class="flex flex-col items-center pt-10 justify-center ">
+        <span class="text-6xl">課程管理</span>
         <div
-            class="flex items-center justify-center gap-20 w-full h-auto pt-4 mx-auto text-2xl text-black bg-[#d1fcdb]">
+            class="flex items-center justify-center gap-20 pt-4 w-full h-auto mx-auto text-2xl text-black bg-[#d1fcdb]">
             <div class="max-w-screen flex flex-col gap-5">
                 <div class="flex gap-5">
                     <testInput v-model="keyword" :text="'課程名稱'" :customWidth="'w-16 md:w-40 2xl:w-70'" />
@@ -276,7 +277,7 @@ async function createNewCourse() {
                 </div>
             </div>
         </div>
-        <div class="flex items-center justify-center w-full gap-8">
+        <div class="flex items-center justify-center w-full pt-10 gap-8">
             <button
                 class="bg-[#23f157] w-96 h-16 border-2 rounded cursor-pointer hover:bg-[#18a83c] hover:font-bold text-3xl"
                 @click="courseSearch()">

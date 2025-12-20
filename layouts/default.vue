@@ -94,8 +94,11 @@ async function getRole() {
                     :image-url="'/component_img/sidebar_img/search_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'預選課'" :link="'/simulated'"
                     :image-url="'/component_img/sidebar_img/preselect_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'留言板'" :link="'/comments'"
+                    :image-url="'/comment_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'公告'" :link="'/announcement'"
                     :image-url="'/component_img/sidebar_img/announcement_icon.svg'" />
+
             </div>
             <div v-if="sidebarOpen && role === 'admin'"
                 class="absolute bg-[#ffffff] pt-10 flex flex-col border-x border-b items-start justify-start h-screen w-60 md:w-72 shadow-[0_0px_14px_rgba(0,0,0,0.25)] z-50">
@@ -104,6 +107,8 @@ async function getRole() {
                     :link="'/admin/allUserInfo'" :image-url="'/component_img/sidebar_img/all-accounts_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'課程管理'"
                     :link="'/admin/allCourseInfo'" :image-url="'/component_img/sidebar_img/timetable_icon.svg'" />
+                <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'留言板'" :link="'/comments'"
+                    :image-url="'/comment_icon.svg'" />
                 <sidebarLink @click="sidebarOpen = false; isShowUserInfo = false" :text="'公告'" :link="'/announcement'"
                     :image-url="'/component_img/sidebar_img/announcement_icon.svg'" />
             </div>
