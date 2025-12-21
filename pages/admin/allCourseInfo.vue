@@ -31,6 +31,7 @@ let temDay = 1
 let temSec = 1
 const token = useCookie('access_token')
 const type = useCookie('token_type')
+const fileInput = ref(null)
 let courseArray = ['編號', '學期', '系所', '年級', '課程名稱', '教師', '上課人數', '學分', '課別', '地點', '星期', '節次', '操作']
 const weekArray = ["一", "二", "三", "四", "五", "六", "日"]
 const result = []
@@ -239,7 +240,7 @@ async function deleteCourse() {
 }
 async function createNewCourse() {
     console.log('建立課程：', createFilter.value)
-    await $fetch( `https://representative-winni-chongouo-b8ca194b.koyeb.app/admin/courses`,
+    await $fetch(`https://representative-winni-chongouo-b8ca194b.koyeb.app/admin/courses`,
         {
             method: 'POST',
             headers: {
@@ -250,6 +251,32 @@ async function createNewCourse() {
         }
     )
     createCourse.value = false
+}
+
+async function importCourse(event) {
+    const file = event.target.files[0]
+    const allowed = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    const formData = new FormData()
+    formData.append('file', file, file.name)
+    if (!allowed.includes(file.type)) {
+        alert('只能上傳 .xlsx 格式')
+        return
+    }
+    try {
+        await $fetch(`https://representative-winni-chongouo-b8ca194b.koyeb.app/admin/import`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `${type.value} ${token.value}`
+                },
+                body: formData
+            }       
+        )
+        alert('匯入成功!')
+        courseSearch()
+    } catch (error) {
+
+    }
 }
 </script>
 <template>
@@ -290,8 +317,10 @@ async function createNewCourse() {
         <div class="flex gap-2 items-end justify-end w-[1520px]">
             <button class="bg-[#6ffc92] w-30 h-10 border rounded cursor-pointer hover:bg-[#23f157] hover:font-bold"
                 @click="showFilters = !showFilters">{{ showFilters ? '隱藏條件' : '顯示條件' }}</button>
+            <input type="file" ref="fileInput" accept=".xlsx" @change="importCourse"
+                style="display: none" />
             <button class="bg-[#6ffc92] w-30 h-10 border rounded cursor-pointer hover:bg-[#23f157] hover:font-bold"
-                @click="">匯入</button>
+                @click="fileInput.click()">匯入</button>
         </div>
         <div
             class=" inline-grid h-auto grid-cols-[40px_80px_140px_80px_320px_80px_80px_60px_180px_100px_60px_140px_160px]  ">
@@ -512,7 +541,9 @@ async function createNewCourse() {
                     @click="createCourse = false">
                     取消
                 </button>
-                <button class="bg-green-600 border border-black text-white px-10 py-4 rounded hover:bg-green-800 cursor-pointer" @click="createNewCourse()">
+                <button
+                    class="bg-green-600 border border-black text-white px-10 py-4 rounded hover:bg-green-800 cursor-pointer"
+                    @click="createNewCourse()">
                     確認
                 </button>
             </div>

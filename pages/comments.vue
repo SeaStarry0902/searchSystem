@@ -15,6 +15,7 @@ onMounted(() => {
 const token = useCookie('access_token')
 const type = useCookie('token_type')
 const role = ref('')
+const userId = ref('')
 const baseUrl = 'https://representative-winni-chongouo-b8ca194b.koyeb.app/comments/search?page=1&page_size=20&comment_limit=5&'
 const weekArray = ["一", "二", "三", "四", "五", "六", "日"]
 const timeResult = []
@@ -103,6 +104,7 @@ async function getRole() {
             }
         })
         role.value = temRole.value.role
+        userId.value = temRole.value.id
     } catch (error) {
 
     }
@@ -143,6 +145,23 @@ async function addComment(id) {
         )
         getComments()
         inputComment.value = ''
+    } catch (error) {
+
+    }
+}
+
+async function deleteComment(id) {
+    const url = role.value !== 'admin' ? `https://representative-winni-chongouo-b8ca194b.koyeb.app/comments/comments/${id}` : `https://representative-winni-chongouo-b8ca194b.koyeb.app/comments/admin/${id}`
+    try {
+        await $fetch(url,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `${type.value} ${token.value}`
+                }
+            }
+        )
+        getComments()
     } catch (error) {
 
     }
@@ -203,11 +222,19 @@ async function addComment(id) {
                                 @click="course.showContent = !course.showContent" />
                         </div>
                     </div>
+                    <!--  Date(announcement.created_at).toLocaleDateString('zh-TW') -->
                     <div class="border border-black h-px w-full"></div>
                     <div v-if="course.showContent" class="w-full flex flex-col items-center">
                         <template v-for="comment in course.comments" :key="comment.id">
-                            <div v-if="course.showContent" class="w-full px-8 py-2 border-b ">
-                                <span class="text-2xl">{{ comment.user_id }}: {{ comment.content }}</span>
+                            <div v-if="course.showContent"
+                                class="w-full px-8 py-2 text-2xl border-b gap-2 flex flex-col">
+                                <div class="flex items-center gap-2">
+                                    {{ comment.author_department_name }}
+                                    <span class="text-gray-600 text-xl">{{ new
+                                        Date(comment.created_at).toLocaleDateString('zh-TW') }}</span>
+                                    <NuxtImg v-if="userId === comment.user_id || role === 'admin'" src="delete_icon.svg" class="size-6 cursor-pointer " @click="deleteComment(comment.id)" />            
+                                </div>
+                                <span class="pl-4">{{ comment.content }}</span>
                             </div>
                         </template>
                         <div class="flex w-full py-4 items-end gap-2">

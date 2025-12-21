@@ -126,7 +126,6 @@ async function getRole() {
                 <span class="flex-1 text-xl md:text-4xl text-black font-bold tracking-widest">國北護課程查詢系統</span>
                 <div class="flex gap-1 md:gap-4 hover:text-[#3867DC] items-center cursor-pointer" @click="logout()">
                     <NuxtImg src="/header_img/logout_icon.svg" alt="logout_icon" class="size-7 md:size-9" />
-                    <!-- click後跳回login並清空cookie，這樣不論是否login都能起效? -->
                     <span class="text-xl md:text-2xl font-bold">{{ isLogin ? '登出' : '登入' }}</span>
                 </div>
 
@@ -150,9 +149,6 @@ async function getRole() {
                         <NuxtImg
                             :src="userInfo.avatar_url ? baseURL + userInfo.avatar_url : '/component_img/eye_icon.svg'"
                             alt="userPhoto" class="border rounded-full size-20 md:size-52" />
-                        <!-- <NuxtImg
-                            :src="userInfo.value.avatar_url ? baseURL + userInfo.value.avatar_url : '/component_img/eye_icon.svg'"
-                            alt="eyes_icon" class="border rounded-full size-20 md:size-52" /> -->
                     </div>
                     <input type="file" ref="fileInput" accept=".jpeg,.jpg,.png,.webp" @change="handleFile"
                         style="display: none" />
