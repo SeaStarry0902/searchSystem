@@ -492,49 +492,49 @@ async function importCourse(event) {
             class="flex flex-col items-center justify-start w-[clamp(0px,70vw,9999px)] h-[clamp(0px,80vh,9999px)] mx-auto bg-[#d1fcdb] rounded-lg z-50 border gap-6 py-6 overflow-auto">
             <span class="text-4xl font-bold">新增課程</span>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.id" :text="'courseId'" />
-                <textInput v-model="createFilter.semester" :text="'semester'" />
+                <textInput v-model="createFilter.id" :text="'課程ID'" />
+                <textInput v-model="createFilter.semester" :text="'學期'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.name_zh" :text="'name_zh'" />
-                <textInput v-model="createFilter.name_en" :text="'name_en'" />
+                <textInput v-model="createFilter.name_zh" :text="'中文名稱'" />
+                <textInput v-model="createFilter.name_en" :text="'英文名稱'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.grade" :text="'grade'" />
-                <textInput v-model="createFilter.credit" :text="'credit'" />
+                <textInput v-model="createFilter.grade" :text="'年級'" />
+                <textInput v-model="createFilter.credit" :text="'學分'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.class_group" :text="'class_group'" />
-                <textInput v-model="createFilter.group_code" :text="'group_code'" />
+                <textInput v-model="createFilter.class_group" :text="'上課組別'" />
+                <textInput v-model="createFilter.group_code" :text="'科目組別'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.required_type" :text="'required_type'" />
-                <textInput v-model="createFilter.category" :text="'category'" />
+                <textInput v-model="createFilter.required_type" :text="'課別名稱'" />
+                <textInput v-model="createFilter.category" :text="'課別代碼'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.limit_min" :text="'limit_min'" />
-                <textInput v-model="createFilter.limit_max" :text="'limit_max'" />
+                <textInput v-model="createFilter.limit_min" :text="'最小人數'" />
+                <textInput v-model="createFilter.limit_max" :text="'最大人數'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.department_name" :text="'department_name'" />
-                <textInput v-model="createFilter.teacher_name" :text="'teacher_name'" />
+                <textInput v-model="createFilter.department_name" :text="'系所'" />
+                <textInput v-model="createFilter.teacher_name" :text="'教師'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.chinese_summary" :text="'chinese_summary'" />
+                <textInput v-model="createFilter.chinese_summary" :text="'中文摘要'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.english_summary" :text="'english_summary'" />
+                <textInput v-model="createFilter.english_summary" :text="'英文摘要'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.raw_remark" :text="'raw_remark'" />
+                <textInput v-model="createFilter.raw_remark" :text="'備註'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.times[0].weekday" :text="'weekday'" />
-                <textInput v-model="createFilter.times[0].classroom" :text="'classroom'" />
+                <textInput v-model="createFilter.times[0].weekday" :text="'星期'" />
+                <textInput v-model="createFilter.times[0].classroom" :text="'教室'" />
             </div>
             <div class="flex w-full justify-center gap-6">
-                <textInput v-model="createFilter.times[0].start_section" :text="'start_section'" />
-                <textInput v-model="createFilter.times[0].end_section" :text="'end_section'" />
+                <textInput v-model="createFilter.times[0].start_section" :text="'開始節數'" />
+                <textInput v-model="createFilter.times[0].end_section" :text="'結束節數'" />
             </div>
             <div class="flex w-full justify-end gap-6">
                 <button class="bg-white border px-10 py-4 rounded hover:bg-gray-200 cursor-pointer"
